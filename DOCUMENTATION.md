@@ -115,6 +115,6 @@ Sets current language: converts `langid` to `langt`, updates field, calls [`lang
 # Notes
 1. This library make some changes in base library: now `tostring()` applied to language code table returns language code.
 
-	tostring(i18n.langMap[lang]) == lang
+	`tostring(i18n.langMap[lang]) == lang`
 2. If `cocos` is aviable, then `FileUtils` will be used for file operations
 3. This library can be used without cocos2d-x, in this case, dummy functions will be used instead of [cocos-specific methods](#cocos-specific-methods).
