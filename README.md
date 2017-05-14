@@ -1,4 +1,5 @@
 # Cocos2d-x lua internationalization helper
+[![License](http://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 
 **IMPORTANT: this libary need lua module from https://github.com/kaishiqi/I18N-Gettext-Supported. `require 'i18n'` should work.**
 
