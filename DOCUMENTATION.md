@@ -8,14 +8,14 @@ This library also make some changes of native libary, read about them [here](#no
   * [`()`](#constructor) (constructor)
     * [`typemap`](#typemap) (duplicate)
     * [Methods](#methods):
-      * [`getLangStr`](#getLangStr) (store language id to string)
+      * [`getLangStr`](#getlangstr) (store language id to string)
       * [`langUpdate`](#langupdate) (reload data from file)
       * [`next`](#next) (select next language (sorted by alphabet))
       * [`cleanup`](#cleanup) (prepare object for removing)
-      * [Cocos-specific methods](#cocosspecific-methods)
-        * [`CCLangDefault`](#CCLangDefault) (Use system language (using `cc.Application:getInstance():getCurrentLanguage()`))
-        * [`CCLangLoad`](#CCLangLoad) (load language using `UserDefault`)
-        * [`CCLangSave`](#CCLangSave) (save language using `UserDefault`)
+      * [Cocos-specific methods](#cocos-specific-methods)
+        * [`CCLangDefault`](#cclangdefault) (Use system language (using `cc.Application:getInstance():getCurrentLanguage()`))
+        * [`CCLangLoad`](#cclangload) (load language using `UserDefault`)
+        * [`CCLangSave`](#cclangsave) (save language using `UserDefault`)
     * [Fields](#fields)
       * [`domain`](#domain) (domain under control)
       * [`filemap`](#filemap) (mapping between languages and files)
@@ -27,7 +27,7 @@ This library also make some changes of native libary, read about them [here](#no
 `typemap` is table for converting another language formats to `langt`.  
 It can convert from:
 
-* Native cocos `LangType` (**IMPORTANT**: DO NOT use `cc.Application:getInstance():getCurrentLanguage()` with it, use [`CCLangDefault`](#CCLangDefault) instead)
+* Native cocos `LangType` (**IMPORTANT**: DO NOT use `cc.Application:getInstance():getCurrentLanguage()` with it, use [`CCLangDefault`](#cclangdefault) instead)
 * Text notation `ct-ln` and `ct_ln`
 * `"en-en"`, `"en_en"`, `"nil"` and  `""` (and `nil`, of couse) to `nil` (therefore, english)
 * Native `langt` will be accepted
@@ -70,13 +70,13 @@ Note: you shold use this becouse instead of raw `cc.Application:getInstance():ge
 
 #### `CCLangLoad`
 	obj:CCLangLoad(name)
-Load language from field called `name` using `UserDefault` (`"lang"` by default). If field not found, use system language (see [`CCLangDefault`](#CCLangDefault)).  
-See also: [`CCLangSave`](#CCLangSave), its pair.
+Load language from field called `name` using `UserDefault` (`"lang"` by default). If field not found, use system language (see [`CCLangDefault`](#cclangdefault)).  
+See also: [`CCLangSave`](#cclangsave), its pair.
 
 #### `CCLangSave`
 	obj:CCLangSave(name)
 Save language to field called `name` using `UserDefault` (`"lang"` by default).  
-See also: [`CCLangLoad`](#CCLangLoad), its pair.
+See also: [`CCLangLoad`](#cclangload), its pair.
 
 ## Fields
 You can give access only to these fields, otherwise error will be raised.  
@@ -117,4 +117,4 @@ Sets current language: converts `langid` to `langt`, updates field, calls [`lang
 
 	tostring(i18n.langMap[lang]) == lang
 2. If `cocos` is aviable, then `FileUtils` will be used for file operations
-3. This library can be used without cocos2d-x, in this case, dummy functions will be used instead of [cocos-specific methods](#cocosspecific-methods).
+3. This library can be used without cocos2d-x, in this case, dummy functions will be used instead of [cocos-specific methods](#cocos-specific-methods).
