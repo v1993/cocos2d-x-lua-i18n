@@ -38,7 +38,7 @@ else -- Fallback
 end
 
 
-static.typemap = setmatatable({}, {__index = function(self, key)
+static.typemap = setmetatable({}, {__index = function(self, key)
 		if type(key) == 'number' then -- Convert LangType
 			return typemap[key]
 		elseif type(key) == 'table' and key.country and key.lang then
