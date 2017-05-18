@@ -66,7 +66,7 @@ This methods only prints warning in non-cocos programs, but really usable in coc
 #### `CCLangDefault`
 	obj:CCLangDefault()
 Set language getten by `cc.Application:getInstance():getCurrentLanguage()`  
-Note: you shold use this becouse instead of raw `cc.Application:getInstance():getCurrentLanguage() == 1` but `cc.LANGUAGE_ENGLISH == 0` (if system language is english)
+Note: you shold use this becouse instead of raw equalization becouse `cc.Application:getInstance():getCurrentLanguage() == 1` but `cc.LANGUAGE_ENGLISH == 0` (if system language is english)
 
 #### `CCLangLoad`
 	obj:CCLangLoad(name)

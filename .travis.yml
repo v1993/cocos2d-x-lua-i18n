@@ -1,0 +1,47 @@
+language: c
+cache: ccache
+
+# sudo: required
+
+os:
+  - linux
+  - osx
+
+env:
+  global:
+    - LUAROCKS=2.3.0
+  matrix:
+    - LUA=lua5.1
+    - LUA=lua5.2
+    - LUA=lua5.3
+    - LUA=luajit     # latest stable version (2.0.4)
+    - LUA=luajit2.0  # current head of 2.0 branch
+    - LUA=luajit2.1  # current head of 2.1 branch
+
+before_install:
+  - source .travis/setenv_lua.sh
+  - source .travis/setup_libs.sh
+  - pip install --user cpp-coveralls
+  - luarocks install Lua-cURL         --server=https://luarocks.org/dev
+  - luarocks install luacov-coveralls --server=https://luarocks.org/dev
+  - luarocks install cluacov
+  - luarocks install lunitx
+  - luarocks install lunajson
+
+install:
+  - .travis/install.sh
+
+script:
+  - cd test
+  - lua -e "print(require'cURL'.version())"
+  - lunit.sh test.lua
+
+after_success:
+#  - coveralls -b .. -r .. -i ./src --dump c.report.json
+  - luacov-coveralls -j luacov.report.json -v
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+  irc: "chat.freenode.net#vyo-build"
