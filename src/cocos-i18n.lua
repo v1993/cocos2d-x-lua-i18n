@@ -13,13 +13,13 @@ local eng = {}
 do
 	local englist = {'en-en', 'en_en', 'nil', ''}
 	for k,v in ipairs(englist) do
-		englist[v] = true
+		eng[v] = true
 	end
 end
 
-local typemap
+local nummap
 if cc then
-	typemap = { -- Convert from LangType to i18n
+	nummap = { -- Convert from LangType to i18n
 		[cc.LANGUAGE_ENGLISH] = nil; -- Just use default strings
 		[cc.LANGUAGE_CHINESE] = i18n.zh_cn;
 		[cc.LANGUAGE_FRENCH] = i18n.fr_fr;
@@ -34,13 +34,13 @@ if cc then
 		[cc.LANGUAGE_ARABIC] = i18n.ar_sa;
 	}
 else -- Fallback
-	typemap = {i18n.zh_cn, i18n.fr_fr, i18n.it_it, i18n.de_de, i18n.es_es, i18n.ru_ru, i18n.ko_kr, i18n.ja_jp, i18n.hu_hu, i18n.pt_pt, i18n.ar_sa} -- Basic Enum from v. 3.14
+	nummap = {i18n.zh_cn, i18n.fr_fr, i18n.it_it, i18n.de_de, i18n.es_es, i18n.ru_ru, i18n.ko_kr, i18n.ja_jp, i18n.hu_hu, i18n.pt_pt, i18n.ar_sa} -- Basic Enum from v. 3.14
 end
 
 
 static.typemap = setmetatable({}, {__index = function(self, key)
 		if type(key) == 'number' then -- Convert LangType
-			return typemap[key]
+			return typemap[nummap[key]]
 		elseif type(key) == 'table' and key.country and key.lang then
 			return key
 		elseif key == nil or eng[key] then
