@@ -25,8 +25,7 @@ return {
   -- (exclude overrules include, do not include
   -- the .lua extension)
   include = {
-    "/cocos%-i18n$",
-    "/cocos%-i18n/.+$",
+    "cocos-i18n",
   },
 
   modules = {
@@ -43,7 +42,7 @@ return {
   -- configuration for luacov-coveralls reporter
   coveralls = {
 
-    -- debug = true;
+  --  debug = true;
 
     pathcorrect = {
       {(os.getenv('MYLUALIBS') or '').."/", "src/"};
