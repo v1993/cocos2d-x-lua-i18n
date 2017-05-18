@@ -40,7 +40,7 @@ end
 
 static.typemap = setmetatable({}, {__index = function(self, key)
 		if type(key) == 'number' then -- Convert LangType
-			return typemap[nummap[key]]
+			return self[nummap[key]]
 		elseif type(key) == 'table' and key.country and key.lang then
 			return key
 		elseif key == nil or eng[key] then
