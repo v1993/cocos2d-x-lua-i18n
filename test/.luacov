@@ -29,6 +29,10 @@ return {
     "/cocos%-i18n/.+$",
   },
 
+  modules = {
+    ["cocos-i18n"] = 'src/cocos-i18n.lua'
+  },
+
   -- Patterns for files to exclude when reporting
   -- all will be included if nothing is listed
   -- (exclude overrules include, do not include
