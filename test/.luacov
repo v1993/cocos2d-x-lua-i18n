@@ -46,7 +46,7 @@ return {
     -- debug = true;
 
     pathcorrect = {
-      {"^.-/share/lua/5.%d/", "src/"};
+      {(os.getenv('MYLUALIBS') or '').."/", "src/"};
     },
 
   },
