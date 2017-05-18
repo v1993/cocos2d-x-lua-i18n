@@ -29,7 +29,7 @@ before_install:
   - luarocks install lunajson
 
 install:
-  - .travis/install.sh
+  - source .travis/install.sh
 
 script:
   - cd test
