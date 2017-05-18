@@ -51,7 +51,7 @@ local _ENV = TEST_CASE "default"
 local obj
 
 function setup()
-	obj = assert_true(pcall(ci18n, i18n.D_DEFAULT, 'locale'))
+	obj = ci18n(i18n.D_DEFAULT, 'locale')
 end
 
 function teardown()
