@@ -1,3 +1,4 @@
+scanning = true
 pcall(require, "luacov")
 
 

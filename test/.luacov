@@ -27,9 +27,9 @@ return {
   include = {
   },
   
-  modules = {
+  modules = scanning and {
     ["cocos-i18n"] = 'cocos-i18n.lua'
-  },
+  } or nil,
 
   -- Patterns for files to exclude when reporting
   -- all will be included if nothing is listed
