@@ -44,4 +44,8 @@ notifications:
   email:
     on_success: never
     on_failure: change
-  irc: "chat.freenode.net#vyo-build"
+  irc:
+    channels:
+      - "chat.freenode.net#vyo-build"
+    on_success: always
+    on_failure: always
