@@ -25,12 +25,11 @@ return {
   -- (exclude overrules include, do not include
   -- the .lua extension)
   include = {
-    "cocos-i18n",
   },
-
-  modules = {
-    ["cocos-i18n"] = 'src/cocos-i18n.lua'
-  },
+  
+  modules = scanning and {
+    ["cocos-i18n"] = 'cocos-i18n.lua'
+  } or nil,
 
   -- Patterns for files to exclude when reporting
   -- all will be included if nothing is listed
@@ -45,7 +44,7 @@ return {
   --  debug = true;
 
     pathcorrect = {
-      {(os.getenv('MYLUALIBS') or '').."/", "src/"};
+      {'^.-'..(os.getenv('MYLUALIBS') or '').."/", "src/"};
     },
 
   },
