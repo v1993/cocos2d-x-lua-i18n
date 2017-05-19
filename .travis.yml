@@ -22,7 +22,6 @@ before_install:
   - source .travis/setenv_lua.sh
   - source .travis/setup_libs.sh
   - luarocks install Lua-cURL         --server=https://luarocks.org/dev
-  - luarocks install luacov-coveralls --server=https://luarocks.org/dev
   - luarocks install cluacov
   - luarocks install lunitx
   - luarocks install lunajson
@@ -36,7 +35,6 @@ script:
   - lunit.sh test.lua
 
 after_success:
-  - luacov-coveralls -v
   - bash <(curl -s https://codecov.io/bash) -s .
 
 notifications:

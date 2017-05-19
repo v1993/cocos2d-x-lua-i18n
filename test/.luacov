@@ -27,26 +27,15 @@ return {
   include = {
   },
   
-  modules = scanning and {
+  modules = {
     ["cocos-i18n"] = 'cocos-i18n.lua'
-  } or nil,
+  },
 
   -- Patterns for files to exclude when reporting
   -- all will be included if nothing is listed
   -- (exclude overrules include, do not include
   -- the .lua extension)
   exclude = {
-  },
-
-  -- configuration for luacov-coveralls reporter
-  coveralls = {
-
-  --  debug = true;
-
-    pathcorrect = {
-      {'^.-'..(os.getenv('MYLUALIBS') or '').."/", "src/"};
-    },
-
   },
 
 }
