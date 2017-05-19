@@ -21,7 +21,6 @@ env:
 before_install:
   - source .travis/setenv_lua.sh
   - source .travis/setup_libs.sh
-  - pip install coverage
   - luarocks install Lua-cURL         --server=https://luarocks.org/dev
   - luarocks install luacov-coveralls --server=https://luarocks.org/dev
   - luarocks install cluacov
