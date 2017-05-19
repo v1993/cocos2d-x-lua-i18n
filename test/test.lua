@@ -56,12 +56,13 @@ function test_langt() -- Test raw accepting
 	assert_equal(answer, typemap[answer])
 end
 
-function test_failure()
+function test_failure() -- All this request should fail
 	assert_false(pget(typemap, {}))
 	assert_false(pget(typemap, -1))
 	assert_false(pget(typemap, 100500)) -- Стопицот!
 	assert_false(pget(typemap, 'ujygfj'))
 	assert_false(pget(typemap, 'retretgtf-jhncfy'))
+	assert_false(pget(typemap, io.stdin)) -- Test with userdata
 end
 
 local _ENV = TEST_CASE "default"
