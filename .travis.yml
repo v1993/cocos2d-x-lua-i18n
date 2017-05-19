@@ -37,7 +37,6 @@ script:
 
 after_success:
   - luacov-coveralls -v
-  - ls -a
   - bash <(curl -s https://codecov.io/bash) -s .
 
 notifications:
