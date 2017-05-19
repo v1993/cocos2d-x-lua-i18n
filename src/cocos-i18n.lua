@@ -39,13 +39,13 @@ end
 
 
 static.typemap = setmetatable({}, {__index = function(self, key)
-		if type(key) == 'number' then -- Convert LangType
+		if type(key) == 'number' and key >= 0 and key <= #nummap then -- Convert LangType
 			return self[nummap[key]]
 		elseif type(key) == 'table' and key.country and key.lang then
 			return key
 		elseif key == nil or eng[key] then
 			return nil
-		elseif type(key) and i18n.langMap[string.gsub(key, '_', '-')] then -- Convert language codes (both "ln_cn" and "ln-cn" are enabled)
+		elseif type(key) == 'string' and i18n.langMap[string.gsub(key, '_', '-')] then -- Convert language codes (both "ln_cn" and "ln-cn" are enabled)
 			return i18n.langMap[string.gsub(key, '_', '-')]
 		end
 		error('Unknown language format')

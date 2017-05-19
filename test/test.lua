@@ -17,7 +17,11 @@ local function pcall_m(...)
 	return pcall(arg[1][arg[2]], arg[1], select(3, ...));
 end
 
-do
+local function pget(tab, key) -- protected get
+	return pcall(function() return tab[key] end)
+end
+
+do -- Base test
 	local s, obj = pcall(ci18n)
 	if not s or not obj then
 		error('Constructor failure: '..tostring(obj))
@@ -30,12 +34,16 @@ local _ENV = TEST_CASE "converter"
 local typemap = ci18n.typemap
 local answer = i18n.langMap['ru-ru']
 
-function test_strings()
+function test_numbers() -- Test LangType from cocos
+	assert_equal(answer, typemap[6])
+end
+
+function test_strings() -- Test string notation
 	 assert_equal(answer, typemap['ru-ru'])
 	 assert_equal(answer, typemap['ru_ru']) 
 end
 
-function test_english()
+function test_english() -- Test everything, that mean english (nil in `langt`)
 	assert_equal(nil, typemap['en-en'])
 	assert_equal(nil, typemap['en_en'])
 	assert_equal(nil, typemap['nil'])
@@ -44,8 +52,17 @@ function test_english()
 	assert_equal(nil, typemap[0])
 end
 
-function test_numbers()
-	assert_equal(answer, typemap[6])
+function test_langt() -- Test raw accepting
+	assert_equal(answer, typemap[answer])
+end
+
+function test_failure()
+	assert_false(pget(typemap, {}))
+	assert_false(pget(typemap, -1))
+	assert_false(pget(typemap, 100500)) -- Стопицот!
+	assert_false(pget(typemap, ''))
+	assert_false(pget(typemap, 'ujygfj'))
+	assert_false(pget(typemap, 'retretgtf-jhncfy'))
 end
 
 local _ENV = TEST_CASE "default"
