@@ -60,7 +60,6 @@ function test_failure()
 	assert_false(pget(typemap, {}))
 	assert_false(pget(typemap, -1))
 	assert_false(pget(typemap, 100500)) -- Стопицот!
-	assert_false(pget(typemap, ''))
 	assert_false(pget(typemap, 'ujygfj'))
 	assert_false(pget(typemap, 'retretgtf-jhncfy'))
 end
