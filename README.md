@@ -1,5 +1,6 @@
 # Cocos2d-x lua internationalization helper
 [![Build Status](https://travis-ci.org/v1993/cocos2d-x-lua-i18n.svg?branch=master)](https://travis-ci.org/v1993/cocos2d-x-lua-i18n)
+[![codecov](https://codecov.io/gh/v1993/cocos2d-x-lua-i18n/branch/master/graph/badge.svg)](https://codecov.io/gh/v1993/cocos2d-x-lua-i18n)
 [![Coverage Status](https://coveralls.io/repos/github/v1993/cocos2d-x-lua-i18n/badge.svg?branch=master)](https://coveralls.io/github/v1993/cocos2d-x-lua-i18n?branch=master)
 [![License](http://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 
