@@ -38,4 +38,15 @@ return {
   exclude = {
   },
 
+  -- configuration for luacov-coveralls reporter
+  coveralls = {
+
+  --  debug = true;
+
+    pathcorrect = {
+      {'^.-'..(os.getenv('MYLUALIBS') or '').."/", "src/"};
+    },
+
+  },
+
 }
