@@ -49,3 +49,4 @@ notifications:
       - "chat.freenode.net#vyo-build"
     on_success: always
     on_failure: always
+    skip_join: false
