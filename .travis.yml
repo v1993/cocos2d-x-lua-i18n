@@ -36,6 +36,7 @@ script:
   - lunit.sh test.lua
 
 after_success:
+  - luacov-coveralls -v --dry-run
   - bash <(curl -s https://codecov.io/bash) -s .
 
 notifications:
