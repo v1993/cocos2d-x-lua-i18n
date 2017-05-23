@@ -1,5 +1,9 @@
 {
 	"locale": {
+		"en": {
+			"Hello, world!": "Hello, world!",
+			"A young man was standing by the bed holding a cup of water.": "A young man was standing by the bed holding a cup of water."
+		},
 		"pl": {
 			"Hello, world!": "Witaj świecie!",
 			"A young man was standing by the bed holding a cup of water.": "Na łóżku trzymał kubek wody młody mężczyzna."
@@ -8,12 +12,17 @@
 			"Hello, world!": "Привет, мир!",
 			"A young man was standing by the bed holding a cup of water.": "Молодой человек стоял у кровати, держа кружку воды."
 		},
-		"zh": {
+		"zh-cn": {
 			"Hello, world!": "你好，世界！",
 			"A young man was standing by the bed holding a cup of water.": "一個年輕人站在床上，拿著一杯水。"
-		}
+		},
+		"order": ["en", "pl", "ru", "zh-cn"]
 	},
 	"locale1": {
+		"en": {
+			"Hello, world!": "Hello, world!",
+			"Buy our elephants!": "Buy our elephants!"
+		},
 		"pl": {
 			"Hello, world!": "Witaj świecie!",
 			"Buy our elephants!": "Kupić nasze słonie!"
@@ -22,10 +31,11 @@
 			"Hello, world!": "Привет, мир!",
 			"Buy our elephants!": "Покупайте наших слонов!"
 		},
-		"zh": {
+		"zh-cn": {
 			"Hello, world!": "你好，世界！",
 			"Buy our elephants!": "購買我們的大象"
-		}
-	}
+		},
+		"order": ["en", "pl", "ru", "zh-cn"]
+	},
+	"order": ["locale", "locale1"]
 }
-

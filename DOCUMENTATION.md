@@ -28,7 +28,7 @@ This library also make some changes of native libary, read about them [here](#no
 It can convert from:
 
 * Native cocos `LangType` (**IMPORTANT**: DO NOT use `cc.Application:getInstance():getCurrentLanguage()` with it, use [`CCLangDefault`](#cclangdefault) instead)
-* Text notation `ct-ln` and `ct_ln`
+* Text notation `ct-ln` and `ct_ln`. Also `xx` will be interpreted as `xx-xx`
 * `"en-en"`, `"en_en"`, `"nil"` and  `""` (and `nil`, of couse) to `nil` (therefore, english)
 * Native `langt` will be accepted
 

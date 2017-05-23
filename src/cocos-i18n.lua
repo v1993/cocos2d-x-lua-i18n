@@ -11,7 +11,7 @@ local lib = setmetatable({}, {__index = static}) -- Everything, but storage of f
 
 local eng = {}
 do
-	local englist = {'en-en', 'en_en', 'nil', ''}
+	local englist = {'en-en', 'en_en', 'en', 'nil', ''}
 	for k,v in ipairs(englist) do
 		eng[v] = true
 	end
@@ -45,8 +45,11 @@ static.typemap = setmetatable({}, {__index = function(self, key)
 			return key
 		elseif key == nil or eng[key] then
 			return nil
-		elseif type(key) == 'string' and i18n.langMap[string.gsub(key, '_', '-')] then -- Convert language codes (both "ln_cn" and "ln-cn" are enabled)
-			return i18n.langMap[string.gsub(key, '_', '-')]
+		elseif type(key) == 'string' then -- Convert language codes (both "ln_cn" and "ln-cn" are enabled, also use xx for 'xx-xx")
+			local res = i18n.langMap[string.gsub(key, '_', '-')] or i18n.langMap[string.format('%s-%s', key, key)]
+			if res then
+				return res
+			end
 		end
 		error('Unknown language format')
 end})
@@ -86,7 +89,7 @@ local fields_allowed = {
 		mt.__tostring = getdomain
 		return true, result
 	end;
-	filemap = function(self, value, key) -- Accept only tables
+	filemap = function(self, value, key, mt) -- Accept only tables
 		if type(value) == 'table' then
 			local correct = {}
 			local i = 1;
@@ -98,7 +101,7 @@ local fields_allowed = {
 			end
 			table.sort(correct, function(a, b) return tostring(a.lang) < tostring(b.lang) end)
 			correct.i = 0;
-			rawset(self, key, correct)
+			rawset(mt, key, correct)
 			self.lang = nil
 			return false
 		elseif value == nil then
@@ -108,14 +111,20 @@ local fields_allowed = {
 			return nil, nil, 'Invalid filemap'
 		end
 	end;
-	lang = function(self, lang, key) -- Convert language and update data
-		rawset(self, key, self.typemap[lang])
+	lang = function(self, lang, key, mt) -- Convert language and update data
+		rawset(mt, key, self.typemap[lang])
 		return false, self:langUpdate()
 	end;
-	prefix = function(self, value, key) -- Prefix, 'locale' for example
+	prefix = function(self, value, key, mt) -- Prefix, 'locale' for example
 		local _, str = pcall(tostring, value)
 		if type(str) == 'string' or value == nil then
-			rawset(self, key, str)
+			local res
+			if value == nil then
+				res = nil
+			else
+				res = str
+			end
+			rawset(mt, key, res)
 			return false, self:langUpdate()
 		else
 			return nil, nil, 'Non-string prefix'
@@ -175,7 +184,7 @@ lib.langUpdate = function(self) -- Reload language
 			if checkFile(path) then
 				return i18n.addMO(path, self)
 			end
-		end	
+		end
 	end
 	return true
 end
@@ -206,11 +215,12 @@ lib.ctor = function(self, domain, prefix)
 end
 
 local newInstance = function(_, ...)
-	local instance = setmetatable({}, {__index = lib, __newindex = function(self, key, value)
+	local mt = {}
+	mt.__newindex = function(self, key, value)
 		local upd, err
 		if fields_allowed[key] then
 			if type(fields_allowed[key]) == 'function' then
-				upd, value, err = fields_allowed[key](self, value, key)
+				upd, value, err = fields_allowed[key](self, value, key, mt)
 				if err then error(err, 2) end
 			else
 				upd = true
@@ -219,12 +229,19 @@ local newInstance = function(_, ...)
 			error("Access to invalid field", 2)
 		end
 		if upd then
-			rawset(self, key, value)
+			rawset(mt, key, value)
 		end
 	end;
-	__tostring = getdomain;
-	__gc = lib.cleanup;
-	})
+	mt.__index = function(self, key)
+		if fields_allowed[key] then
+			return mt[key]
+		else
+			return lib[key]
+		end
+	end
+	mt.__tostring = getdomain;
+	mt.__gc = lib.cleanup;
+	local instance = setmetatable({}, mt)
 	instance:ctor(...)
 	return instance
 end
