@@ -59,6 +59,45 @@ local function prefix_filemap(assert_equal)
 	end
 end
 
+local function base_next_filemap(assert_equal)
+	return function()
+		local map1 = {
+			ru = 'locale/ru.mo',
+			pl = 'locale/pl.mo',
+			zh_cn = 'locale/zh-cn.mo'
+		}
+		local map2 = {
+			ru = 'locale1/ru.mo',
+			pl = 'locale1/pl.mo',
+			zh_cn = 'locale1/zh-cn.mo'
+		}
+		obj.filemap = map1
+		local ctab = {nextdir = function(self) self.filemap = map2 end, nextlang = function(self) self:next() end, test = assert_equal}
+		trtest.test_all(obj, ctab)
+	end
+end
+
+local function prefix_next_filemap(assert_equal)
+	return function()
+		local map1 = {
+			ru = 'ru.mo',
+			pl = 'pl.mo',
+			zh_cn = 'zh-cn.mo'
+		}
+		local map2 = {
+			ru = 'ru.mo',
+			pl = 'pl.mo',
+			zh_cn = 'zh-cn.mo'
+		}
+		local prefix1 = 'locale'
+		local prefix2 = 'locale1'
+		obj.filemap = map1
+		obj.prefix = prefix1
+		local ctab = {nextdir = function(self) self.prefix = prefix2; self.filemap = map2 end, nextlang = function(self) self:next() end, test = assert_equal}
+		trtest.test_all(obj, ctab)
+	end
+end
+
 local function pget(tab, key) -- protected get
 	return pcall(function() return tab[key] end)
 end
@@ -122,5 +161,9 @@ end
 test_base_filemap = base_filemap(assert_equal)
 
 test_filemap_with_prefix = prefix_filemap(assert_equal)
+
+test_base_filemap_with_next = base_next_filemap(assert_equal)
+
+test_prefix_next_filemap = prefix_next_filemap(assert_equal)
 
 if not HAS_RUNNER then lunit.run() end
