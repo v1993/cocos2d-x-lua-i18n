@@ -18,6 +18,47 @@ end
 
 local trtest = require 'translate_test'
 
+local obj
+
+local function base_filemap(assert_equal)
+	return function()
+		local map1 = {
+			ru = 'locale/ru.mo',
+			pl = 'locale/pl.mo',
+			zh_cn = 'locale/zh-cn.mo'
+		}
+		local map2 = {
+			ru = 'locale1/ru.mo',
+			pl = 'locale1/pl.mo',
+			zh_cn = 'locale1/zh-cn.mo'
+		}
+		obj.filemap = map1
+		local ctab = {nextdir = function(self) self.filemap = map2 end, onlang = function(self, dir, lang) self.lang = lang end, test = assert_equal}
+		trtest.test_all(obj, ctab)
+	end
+end
+
+local function prefix_filemap(assert_equal)
+	return function()
+		local map1 = {
+			ru = 'ru.mo',
+			pl = 'pl.mo',
+			zh_cn = 'zh-cn.mo'
+		}
+		local map2 = {
+			ru = 'ru.mo',
+			pl = 'pl.mo',
+			zh_cn = 'zh-cn.mo'
+		}
+		local prefix1 = 'locale'
+		local prefix2 = 'locale1'
+		obj.filemap = map1
+		obj.prefix = prefix1
+		local ctab = {nextdir = function(self) self.prefix = prefix2; self.filemap = map2 end, onlang = function(self, dir, lang) self.lang = lang end, test = assert_equal}
+		trtest.test_all(obj, ctab)
+	end
+end
+
 local function pget(tab, key) -- protected get
 	return pcall(function() return tab[key] end)
 end
@@ -69,7 +110,6 @@ function test_failure() -- All this requests should fail
 end
 
 local _ENV = TEST_CASE "default"
-local obj
 
 function setup()
 	obj = ci18n(i18n.D_DEFAULT)
@@ -79,25 +119,8 @@ function teardown()
 	assert_true(pcall_m(obj, 'cleanup'))
 end
 
-local function trace (event)
-	local s = debug.getinfo(2).short_src
-	print(s)
-end
+test_base_filemap = base_filemap(assert_equal)
 
-function test_base_filemap()
-	local map1 = {
-		ru = 'locale/ru.mo',
-		pl = 'locale/pl.mo',
-		zh_cn = 'locale/zh-cn.mo'
-	}
-	local map2 = {
-		ru = 'locale1/ru.mo',
-		pl = 'locale1/pl.mo',
-		zh_cn = 'locale1/zh-cn.mo'
-	}
-	obj.filemap = map1
-	local ctab = {nextdir = function(self) self.filemap = map2 end, onlang = function(self, dir, lang) self.lang = lang end, test = assert_equal}
-	trtest.test_all(obj, ctab)
-end
+test_filemap_with_prefix = prefix_filemap(assert_equal)
 
 if not HAS_RUNNER then lunit.run() end
