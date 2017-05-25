@@ -58,7 +58,7 @@ Reload language from file. You don't need it in most cases.
 ### `cleanup`
 	lib:cleanup()
 Clean up extra data, I can't garrant correct working after this call.  
-Also, you don't need this in `lua >= 5.2` (5.1 in cocos2d-x).
+You should call it before unloading object
 
 ### Cocos-specific methods
 This methods only prints warning in non-cocos programs, but really usable in cocos games
