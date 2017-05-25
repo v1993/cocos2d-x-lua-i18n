@@ -240,7 +240,6 @@ local newInstance = function(_, ...)
 		end
 	end
 	mt.__tostring = getdomain;
-	mt.__gc = lib.cleanup;
 	local instance = setmetatable({}, mt)
 	instance:ctor(...)
 	return instance

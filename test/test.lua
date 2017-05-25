@@ -148,7 +148,7 @@ function test_failure() -- All this requests should fail
 	assert_false(pget(typemap, io.stdin)) -- Test with userdata
 end
 
-local _ENV = TEST_CASE "default"
+local _ENV = TEST_CASE "default domain"
 
 function setup()
 	obj = ci18n(i18n.D_DEFAULT)
@@ -159,11 +159,36 @@ function teardown()
 end
 
 test_base_filemap = base_filemap(assert_equal)
-
 test_filemap_with_prefix = prefix_filemap(assert_equal)
-
 test_base_filemap_with_next = base_next_filemap(assert_equal)
-
 test_prefix_next_filemap = prefix_next_filemap(assert_equal)
+
+local _ENV = TEST_CASE "prefix setup"
+
+function setup()
+	obj = ci18n(i18n.D_DEFAULT, 'locale')
+end
+
+function teardown()
+	assert_true(pcall_m(obj, 'cleanup'))
+end
+
+test_start_prefix = function()
+	obj.filemap  = {
+			ru = 'ru.mo',
+			pl = 'pl.mo',
+			zh_cn = 'zh-cn.mo'
+	}
+	trtest.test_dir(obj, 'locale', {onlang = function(self, dir, lang) self.lang = lang end, test = assert_equal})
+end
+
+test_start_prefix_with_next = function()
+	obj.filemap  = {
+			ru = 'ru.mo',
+			pl = 'pl.mo',
+			zh_cn = 'zh-cn.mo'
+	}
+	trtest.test_dir(obj, 'locale', {nextlang = function(self, dir, lang) self:next() end, test = assert_equal})
+end
 
 if not HAS_RUNNER then lunit.run() end
