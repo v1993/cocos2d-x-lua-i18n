@@ -173,7 +173,7 @@ function teardown()
 	assert_true(pcall_m(obj, 'cleanup'))
 end
 
-test_start_prefix = function()
+function test_start_prefix()
 	obj.filemap  = {
 			ru = 'ru.mo',
 			pl = 'pl.mo',
@@ -182,7 +182,7 @@ test_start_prefix = function()
 	trtest.test_dir(obj, 'locale', {onlang = function(self, dir, lang) self.lang = lang end, test = assert_equal})
 end
 
-test_start_prefix_with_next = function()
+function test_start_prefix_with_next()
 	obj.filemap  = {
 			ru = 'ru.mo',
 			pl = 'pl.mo',
@@ -216,16 +216,40 @@ function teardown()
 	assert_true(pcall_m(obj, 'cleanup'))
 end
 
-test_CCLangDefault = function()
+function test_CCLangDefault()
 	assert_true(pcall_m(obj, 'CCLangDefault'))
 end
 
-test_CCLangLoad = function()
+function test_CCLangLoad()
 	assert_true(pcall_m(obj, 'CCLangLoad'))
 end
 
-test_CCLangSave = function()
+function test_CCLangSave()
 	assert_true(pcall_m(obj, 'CCLangSave'))
+end
+
+local _ENV = TEST_CASE "getLangStr test"
+
+function setup()
+	obj = ci18n()
+end
+
+function teardown()
+	assert_true(pcall_m(obj, 'cleanup'))
+end
+
+function test_valid()
+	obj.lang = 'ru'
+	assert_equal('ru-ru', obj:getLangStr())
+end
+
+function test_english()
+	obj.lang = 'en'
+	assert_equal('en-en', obj:getLangStr())
+end
+
+function test_default()
+	assert_equal('en-en', obj:getLangStr())
 end
 
 if not HAS_RUNNER then lunit.run() end
