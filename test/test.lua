@@ -191,4 +191,41 @@ test_start_prefix_with_next = function()
 	trtest.test_dir(obj, 'locale', {nextlang = function(self, dir, lang) self:next() end, test = assert_equal})
 end
 
+local _ENV = TEST_CASE "address-based domain"
+
+function setup()
+	obj = ci18n()
+end
+
+function teardown()
+	assert_true(pcall_m(obj, 'cleanup'))
+end
+
+test_base_filemap = base_filemap(assert_equal)
+test_filemap_with_prefix = prefix_filemap(assert_equal)
+test_base_filemap_with_next = base_next_filemap(assert_equal)
+test_prefix_next_filemap = prefix_next_filemap(assert_equal)
+
+local _ENV = TEST_CASE "dummies test"
+
+function setup()
+	obj = ci18n()
+end
+
+function teardown()
+	assert_true(pcall_m(obj, 'cleanup'))
+end
+
+test_CCLangDefault = function()
+	assert_true(pcall_m(obj, 'CCLangDefault'))
+end
+
+test_CCLangLoad = function()
+	assert_true(pcall_m(obj, 'CCLangLoad'))
+end
+
+test_CCLangSave = function()
+	assert_true(pcall_m(obj, 'CCLangSave'))
+end
+
 if not HAS_RUNNER then lunit.run() end
