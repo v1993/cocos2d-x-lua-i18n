@@ -116,15 +116,8 @@ local fields_allowed = {
 		return false, self:langUpdate()
 	end;
 	prefix = function(self, value, key, mt) -- Prefix, 'locale' for example
-		local _, str = pcall(tostring, value)
-		if type(str) == 'string' or value == nil then
-			local res
-			if value == nil then
-				res = nil
-			else
-				res = str
-			end
-			rawset(mt, key, res)
+		if type(value) == 'string' or value == nil then
+			rawset(mt, key, value)
 			return false, self:langUpdate()
 		else
 			return nil, nil, 'Non-string prefix'
@@ -219,12 +212,8 @@ local newInstance = function(_, ...)
 	mt.__newindex = function(self, key, value)
 		local upd, err
 		if fields_allowed[key] then
-			if type(fields_allowed[key]) == 'function' then
-				upd, value, err = fields_allowed[key](self, value, key, mt)
-				if err then error(err, 2) end
-			else
-				upd = true
-			end
+			upd, value, err = fields_allowed[key](self, value, key, mt)
+			if err then error(err, 2) end
 		else
 			error("Access to invalid field", 2)
 		end

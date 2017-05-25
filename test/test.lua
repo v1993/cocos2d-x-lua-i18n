@@ -18,6 +18,22 @@ end
 
 local trtest = require 'translate_test'
 
+local function pget(tab, key) -- protected get
+	return pcall(function() return tab[key] end)
+end
+
+local function pset(tab, key, val) -- protected get
+	return pcall(function() tab[key] = val end)
+end
+
+do -- Base test
+	local s, obj = pcall(ci18n)
+	if not s or not obj then
+		error('Constructor failure: '..tostring(obj))
+	end
+	assert(pcall_m(obj, 'cleanup'))
+end
+
 local obj
 
 local function base_filemap(assert_equal)
@@ -96,18 +112,6 @@ local function prefix_next_filemap(assert_equal)
 		local ctab = {nextdir = function(self) self.prefix = prefix2; self.filemap = map2 end, nextlang = function(self) self:next() end, test = assert_equal}
 		trtest.test_all(obj, ctab)
 	end
-end
-
-local function pget(tab, key) -- protected get
-	return pcall(function() return tab[key] end)
-end
-
-do -- Base test
-	local s, obj = pcall(ci18n)
-	if not s or not obj then
-		error('Constructor failure: '..tostring(obj))
-	end
-	assert(pcall_m(obj, 'cleanup'))
 end
 
 local _ENV = TEST_CASE "converter"
@@ -206,7 +210,7 @@ test_filemap_with_prefix = prefix_filemap(assert_equal)
 test_base_filemap_with_next = base_next_filemap(assert_equal)
 test_prefix_next_filemap = prefix_next_filemap(assert_equal)
 
-local _ENV = TEST_CASE "dummies test"
+local _ENV = TEST_CASE "dummies"
 
 function setup()
 	obj = ci18n()
@@ -228,7 +232,7 @@ function test_CCLangSave()
 	assert_true(pcall_m(obj, 'CCLangSave'))
 end
 
-local _ENV = TEST_CASE "getLangStr test"
+local _ENV = TEST_CASE "getLangStr"
 
 function setup()
 	obj = ci18n()
@@ -250,6 +254,40 @@ end
 
 function test_default()
 	assert_equal('en-en', obj:getLangStr())
+end
+
+local _ENV = TEST_CASE "fails"
+
+function setup()
+	obj = ci18n()
+end
+
+function teardown()
+	assert_true(pcall_m(obj, 'cleanup'))
+end
+
+function test_no_file()
+	obj.filemap = {ru = 'abcde.fgh'}
+	trtest.test_english(obj, assert_equal)
+end
+
+function test_bad_prefix()
+	assert_false(pset(obj, 'prefix', {}))
+	assert_false(pset(obj, 'prefix', 0))
+	assert_false(pset(obj, 'prefix', io.stdin))
+end
+
+function test_bad_filemap()
+	assert_false(pset(obj, 'filemap', 0))
+	assert_false(pset(obj, 'filemap', ''))
+	assert_false(pset(obj, 'filemap', io.stdin))
+end
+
+function test_bad_field()
+	assert_false(pset(obj, 'abc', 0))
+	assert_false(pset(obj, nil, ''))
+	assert_false(pset(obj, 0, io.stdin))
+	assert_false(pset(obj, io.stdin, {}))
 end
 
 if not HAS_RUNNER then lunit.run() end

@@ -44,6 +44,12 @@ local test_dir = function(obj, dir, ctab)
 	end
 end
 
+local test_english = function(obj, test)
+	for k,dir in ipairs(data.order) do
+		test_lang(obj, dir, 'en', {test = test})
+	end
+end
+
 local test_all = function(obj, ctab)
 	setmetatable(ctab, mymt)
 	for k,dir in ipairs(data.order) do
@@ -53,4 +59,4 @@ local test_all = function(obj, ctab)
 	end
 end
 
-return {test_word = test_word, test_lang = test_lang, test_dir = test_dir, test_all = test_all}
+return {test_word = test_word, test_lang = test_lang, test_dir = test_dir, test_english = test_english, test_all = test_all}
