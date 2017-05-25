@@ -268,6 +268,7 @@ end
 
 function test_no_file()
 	obj.filemap = {ru = 'abcde.fgh'}
+	obj.lang = 'ru'
 	trtest.test_english(obj, assert_equal)
 end
 
