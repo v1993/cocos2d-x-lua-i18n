@@ -19,6 +19,6 @@ See [DOCUMENTATION.md](DOCUMENTATION.md) for help.
 
 ## TODO list
 
-1. make auto-testing with Travis-ci
-2. make manual-testing with Cocos2d-x
-3. write examples
+1. [x] make auto-testing with Travis-ci
+2. [ ] make manual-testing with Cocos2d-x
+3. [ ] write examples
