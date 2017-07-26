@@ -22,7 +22,7 @@ local function pget(tab, key) -- protected get
 	return pcall(function() return tab[key] end)
 end
 
-local function pset(tab, key, val) -- protected get
+local function pset(tab, key, val) -- protected set
 	return pcall(function() tab[key] = val end)
 end
 
