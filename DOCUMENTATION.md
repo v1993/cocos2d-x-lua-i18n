@@ -45,7 +45,7 @@ There is a list of all aviable methods, use `:` to call them:
 	obj:method()
 ### `getLangStr`
 	langstr = obj:getLangStr()
-You can use this function for getting current language as most compatible format. General for saving and transferring.
+You can use this function for getting current language at most compatible format. General for saving and transferring.
 
 ### `next`
 	newlang = obj:next()
