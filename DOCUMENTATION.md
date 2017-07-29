@@ -57,7 +57,7 @@ Reload language from file. You don't need it in most cases.
 
 ### `cleanup`
 	lib:cleanup()
-Clean up extra data, I can't garrant correct working after this call.  
+Clean up extra data, I can't guarantee correct working after this call.  
 You should call it before unloading object
 
 ### Cocos-specific methods
