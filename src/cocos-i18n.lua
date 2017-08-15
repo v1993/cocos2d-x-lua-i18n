@@ -1,4 +1,5 @@
-require 'i18n' -- Load library, search path sould include "path_to_storage/?/init.lua"
+-- require 'i18n' -- Load library, search path sould include "path_to_storage/?/init.lua"
+require 'i18n.init' -- FIXME: It is a temporary solution, fix it later. Refer to https://github.com/cocos2d/cocos2d-x/issues/18119
 
 local cc, i18n = cc, i18n -- For speed up
 
