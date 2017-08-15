@@ -1,0 +1,9 @@
+# Dirs
+/assets
+/bin
+/gen
+/libs
+/obj
+
+# Files
+/local.properties
